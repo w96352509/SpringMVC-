@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>登入成功頁面</title>
+</head>
+<body>
+登入成功 
+ 登入者 : <td th:text="${user.name}"></td>
+
+<p/>
+<a th:href="@{/login/remove/}">登出</a> 
+</body>
+</html>

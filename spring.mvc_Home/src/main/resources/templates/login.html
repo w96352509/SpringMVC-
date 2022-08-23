@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<title>登入</title>
+<style type="text/css">
+	.fieldError{color: red;}
+</style>
+</head>
+<body>
+	<div class="container my-2">
+		<h1>登入</h1>
+		<form action="#" 
+			  th:action="@{/login/}" 
+			  th:object="${user}"
+			  th:method="${_method}">
+			<div class="form_group">
+				<!-- id 隱藏欄位 -->
+				<input type="hidden" th:field="*{id}"/>
+				
+				<label for="name">名稱：</label>
+				<span 
+				class="fieldError" 
+				th:if="${#fields.hasErrors('*{name}')}" 
+				th:errors="*{name}"
+				> 
+				</span>
+				<p />
+				<input type="text" th:field="*{name}" class="form-control" />
+				<p />
+				
+				<label for="name">密碼：</label>
+				
+				<span 
+				class="fieldError" 
+				th:if="${#fields.hasErrors('*{password}')}" 
+				th:errors="*{password}"
+				> 
+				</span>
+				<input type="text" th:field="*{password}" class="form-control" />
+				<p />
+			</div>
+			<br />
+			<input type="submit" th:value="登入" class="btn btn-primary" />
+			<a th:href="@{/login/add}" class="btn btn-primary">新建帳號</a>
+		</form>
+		<p />
+	</div>
+</body>
+</html>
