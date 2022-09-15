@@ -30,10 +30,12 @@ public class LoginController {
 	
 	@GetMapping("/")
 	public String index(@ModelAttribute User user, Model model , HttpSession session) {
+		// 沒有 session 紀錄的成功 1 則回首頁
 		if(session.getAttribute("ok") == null) {
 			model.addAttribute("_method", "POST");
 			return "login";
 		}
+		// 取得存在 seeion 中的 user 資訊
 		model.addAttribute("_method", "POST");
 		Object user2 = session.getAttribute("user");
 		model.addAttribute("user", userDao.findByName(user2.toString()).get());	
@@ -42,11 +44,14 @@ public class LoginController {
 
 	@PostMapping("/")
 	public String login(@Valid @ModelAttribute User user, BindingResult result, Model model , HttpSession session) {
-        vaildate.validate(user, result);
+        // 驗證方法帶入
+		vaildate.validate(user, result);
+		// 有錯回首頁
 		if(result.hasErrors()) {
         	model.addAttribute("_method", "POST");
         	return "login";
         }
+		// 正確則將 user 導入前端 , session 記錄成功 1 , 和 user 資料
 		model.addAttribute("user", userDao.findByName(user.getName()).get());
 		session.setAttribute("ok" ,"1");
 		session.setAttribute("user",userDao.findByName(user.getName()).get().getName());

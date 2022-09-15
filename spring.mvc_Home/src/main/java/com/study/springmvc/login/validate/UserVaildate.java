@@ -25,15 +25,18 @@ public class UserVaildate implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		User user = (User)target;
+		User user = (User)target; // 輸入的使用者資訊
 		if(user.getName() == null || user.getPassword() == null) {
 		       errors.rejectValue("name", "name.Empty", "帳號密碼不可空白");
 		}else {
-			Optional<User> loginuser = userDao.findByName(user.getName());
-			if(!loginuser.isPresent()){
+			// 從資料庫找使用者
+			Optional<User> Daologinuser = userDao.findByName(user.getName());
+			// 如果無值
+			if(!Daologinuser.isPresent()){
 				 errors.rejectValue("name", "name.Error", "無使用者");
 			}else {
-				if(!(loginuser.get().getPassword().equals(user.getPassword()))) {
+				// 有使用者則密碼比對
+				if(!(Daologinuser.get().getPassword().equals(user.getPassword()))) {
 					 errors.rejectValue("password", "password.Error", "密碼錯誤");	
 				}
 			}
